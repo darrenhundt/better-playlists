@@ -83,7 +83,7 @@ class Playlist extends Component {
 	render() {
 		let playlist = this.props.playlist
 		return (
-			<div style={{...defaultStyle, width: "33%", display: "inline-block"}}>
+			<div style={{...defaultStyle, width: "24%", display: "inline-block"}}>
 				<img />
 				<h3>{playlist.name}</h3>
 				<ul>
@@ -108,27 +108,25 @@ class App extends Component {
 		setTimeout(() => {
 			this.setState({serverData: fakeServerData});
 		}, 1000);
-		setTimeout(() => {
-			this.setState({filterString: '2010'});
-		}, 2000);
 	}
   render() {
+		let playlistToRender = this.state.serverData.user ? this.state.serverData.user.playlists
+			.filter(playlist => 
+						 playlist.name.toLowerCase().includes(
+								this.state.filterString.toLowerCase())
+						 ) : []
     return (
       <div style={{background: bg}} className="App">
 				{this.state.serverData.user ? 
 					<div>
 						<h1 style={defaultStyle}>
 						{this.state.serverData.user.name}'s Playlist</h1>
-							<PlaylistCounter playlists={this.state.serverData.user.playlists}/>
-							<HoursCounter playlists={this.state.serverData.user.playlists}/>
+							<PlaylistCounter playlists={playlistToRender}/>
+							<HoursCounter playlists={playlistToRender}/>
 						}
 						<Filter onTextChange={text => this.setState({filterString: text})}/>
-						{this.state.serverData.user.playlists.filter(playlist =>
-								playlist.name.toLowerCase().includes(
-									this.state.filterString.toLowerCase())
-							).map((playlist) => {
-							return <Playlist playlist={playlist}/>
-						}
+						{playlistToRender.map((playlist) =>
+							<Playlist playlist={playlist}/>
 						)}
 					</div> : <h1 style={defaultStyle}>Loading...</h1>
 				}
@@ -136,5 +134,5 @@ class App extends Component {
     );
   }
 }
-
+ 
 export default App;
