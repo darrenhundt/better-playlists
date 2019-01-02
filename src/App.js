@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
-let textColor = '#fff';
 let defaultStyle = {
-	color: textColor
+	color: '#fff'
 };
 let bg = '#bbb';
 
@@ -53,6 +52,7 @@ class App extends Component {
 				<Aggregate />
 				<Aggregate />
 				<Filter/>
+				<Playlist/>
 				<Playlist/>
 				<Playlist/>
 				<Playlist/>
