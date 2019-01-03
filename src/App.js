@@ -6,41 +6,6 @@ let defaultStyle = {
 	color: '#fff'
 };
 let bg = '#bbb';
-let fakeServerData = {
-	user: {
-		name: 'Darren',
-		playlists: [
-			{
-				name: '2010 Favorites',
-				songs: [
-					{name: 'Beat It', duration: 240},
-					{name: 'Some Nights', duration: 300},
-					{name: 'Pumped Up Kicks', duration: 240}]
-			},
-			{
-				name: '2011 Favorites',
-				songs: [
-					{name: 'Lonely Boy', duration: 440},
-					{name: 'Gold on the Ceiling', duration: 240},
-					{name: 'Next Girl', duration: 240}]
-			},
-			{
-				name: '2012 Favorites',
-				songs: [
-					{name: 'Shook Me', duration: 340},
-					{name: 'All Night', duration: 240},
-					{name: 'Long', duration: 240}]
-			},
-			{
-				name: '2013 Favorites',
-				songs: [
-					{name: 'Gone', duration: 140},
-					{name: 'Golddigga', duration: 240},
-					{name: 'Power', duration: 240}]
-			}
-		]
-	}
-};
 
 class PlaylistCounter extends Component {
 	render () {
@@ -172,10 +137,13 @@ class App extends Component {
 		let playlistToRender = 
 				this.state.user && 
 				this.state.playlists 
-					? this.state.playlists.filter(playlist => 
-						 playlist.name.toLowerCase().includes(
-								this.state.filterString.toLowerCase()))
-					: []
+					? this.state.playlists.filter(playlist => {
+						let matchesPlaylist = playlist.name.toLowerCase().includes(
+								this.state.filterString.toLowerCase())
+						let matchesSong = playlist.songs.find(song => song.name.toLowerCase()
+								.includes(this.state.filterString.toLowerCase()))
+						return matchesPlaylist || matchesSong
+						}) : []
     return (
       <div style={{background: bg}} className="App">
 				{this.state.user ? 
